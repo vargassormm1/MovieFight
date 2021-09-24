@@ -60,7 +60,7 @@ const createAutoComplete = ({
   };
 
   // when we type on search, we call onInput that is inside debounce
-  input.addEventListener("input", debounce(onInput));
+  input.addEventListener("input", debounce(onInput, 500));
 
   //closes dropdown menu when clicked outside
   document.addEventListener("click", (event) => {

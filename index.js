@@ -1,7 +1,6 @@
-//index.js
 const autocompleteConfig = {
   //passing in our rendering function
-  renderOption: (movie) => {
+  renderOption(movie) {
     //If image source is N/A then empty string other wise keep original image source
     const imgSrc = movie.Poster === "N/A" ? "" : movie.Poster;
     return `
@@ -12,7 +11,7 @@ const autocompleteConfig = {
   inputValue: (movie) => {
     return movie.Title;
   },
-  fetchData: async (searchTerm) => {
+  async fetchData(searchTerm) {
     const response = await axios.get("http://www.omdbapi.com/", {
       params: {
         apikey: "a1d6cd06",
@@ -28,21 +27,19 @@ const autocompleteConfig = {
   },
 };
 
-//we are now using our autocomplete function
+//AutoComplete functions
 createAutoComplete({
   ...autocompleteConfig,
-  //passing in our root element
   root: document.querySelector("#left-autocomplete"),
-  onOptionSelect: (movie) => {
+  onOptionSelect(movie) {
     document.querySelector(".tutorial").classList.add("is-hidden");
     onMovieSelect(movie, document.querySelector("#left-summary"), "left");
   },
 });
 createAutoComplete({
   ...autocompleteConfig,
-  //passing in our root element
   root: document.querySelector("#right-autocomplete"),
-  onOptionSelect: (movie) => {
+  onOptionSelect(movie) {
     document.querySelector(".tutorial").classList.add("is-hidden");
     onMovieSelect(movie, document.querySelector("#right-summary"), "right");
   },
@@ -52,15 +49,14 @@ let leftMovie;
 let rightMovie;
 //This functions will make another network request and fetch data on movie clicked
 const onMovieSelect = async (movie, summaryElement, side) => {
-  console.log(movie);
-  //We are using axios.get againf to make the followup request with a different parameter
+  //Use axios.get again to make the followup request with a different parameter
   const response = await axios.get("http://www.omdbapi.com/", {
     params: {
       apikey: "a1d6cd06",
       i: movie.imdbID,
     },
   });
-  //selects the summary div and insert the movie stat usinf the movieTemplate helper function
+  //selects the summary div and insert the movie stat using the movieTemplate helper function
   summaryElement.innerHTML = movieTemplate(response.data);
 
   if (side === "left") {
@@ -74,6 +70,7 @@ const onMovieSelect = async (movie, summaryElement, side) => {
   }
 };
 
+//Comparison function
 const runComparison = () => {
   const leftSideStats = document.querySelectorAll(
     "#left-summary .notification"
@@ -85,8 +82,8 @@ const runComparison = () => {
   leftSideStats.forEach((leftStat, index) => {
     const rightStat = rightSideStats[index];
 
-    const leftSideValue = parseInt(leftStat.dataset.value);
-    const rightSideValue = parseInt(rightStat.dataset.value);
+    const leftSideValue = leftStat.dataset.value;
+    const rightSideValue = rightStat.dataset.value;
 
     if (rightSideValue > leftSideValue) {
       leftStat.classList.remove("is-primary");
@@ -100,14 +97,12 @@ const runComparison = () => {
 
 //CSS and HTML for movie stat
 const movieTemplate = (movieDetail) => {
-  //this will first take out the '$' stymbol and then replace the ',' and we are left with just the number
-  //then we are left with a string but we need it to be a number so we parse it
   const dollars = parseInt(
     movieDetail.BoxOffice.replace(/\$/g, "").replace(/,/g, "")
   );
-  const Metascore = parseInt(movieDetail.Metascore);
+  const metascore = parseInt(movieDetail.Metascore);
   const imdbRating = parseFloat(movieDetail.imdbRating);
-  const imdbvotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ""));
+  const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ""));
   const awards = movieDetail.Awards.split(" ").reduce((prev, word) => {
     const value = parseInt(word);
 
@@ -141,7 +136,7 @@ const movieTemplate = (movieDetail) => {
       <p class="title">${movieDetail.BoxOffice}</p>
       <p class="subtitle">Box Office</p>
     </article>
-    <article data-value=${Metascore} class="notification is-primary">
+    <article data-value=${metascore} class="notification is-primary">
       <p class="title">${movieDetail.Metascore}</p>
       <p class="subtitle">Metascore</p>
     </article>
@@ -149,7 +144,7 @@ const movieTemplate = (movieDetail) => {
       <p class="title">${movieDetail.imdbRating}</p>
       <p class="subtitle">IMDB Rating</p>
     </article>
-    <article data-value=${imdbvotes} class="notification is-primary">
+    <article data-value=${imdbVotes} class="notification is-primary">
       <p class="title">${movieDetail.imdbVotes}</p>
       <p class="subtitle">IMDB Votes</p>
     </article>
