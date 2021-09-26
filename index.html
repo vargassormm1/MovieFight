@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     <link
@@ -14,10 +14,10 @@
   </head>
 
   <body>
-    <section class="hero is-primary is-bold">
+    <section class="hero is-danger is-bold">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">
+          <h1 class="title has-text-warning">
             Movie Fight
             <span class="icon">
               <i class="fas fa-film"></i>
@@ -26,7 +26,6 @@
         </div>
       </div>
     </section>
-
     <div class="container">
       <div class="columns">
         <div class="column">
@@ -40,12 +39,13 @@
         </div>
       </div>
 
-      <div class="column is-half notification is-primary tutorial">
+      <div
+        class="column is-half notification has-text-warning is-danger tutorial"
+      >
         <h1 class="title">Search For a Movie on Both Sides</h1>
-        <p class="subtitle">We will tell which is best!</p>
+        <p class="subtitle">We will tell you which is best!</p>
       </div>
     </div>
-
     <script src="utils.js"></script>
     <script src="autocomplete.js"></script>
     <script src="index.js"></script>

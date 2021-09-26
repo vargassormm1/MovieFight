@@ -8,7 +8,7 @@ const autocompleteConfig = {
 			${movie.Title} (${movie.Year})
 		`;
   },
-  inputValue: (movie) => {
+  inputValue(movie) {
     return movie.Title;
   },
   async fetchData(searchTerm) {
@@ -87,14 +87,13 @@ const runComparison = () => {
 
     if (rightSideValue > leftSideValue) {
       leftStat.classList.remove("is-primary");
-      leftStat.classList.add("is-warning");
+      leftStat.classList.add("is-danger");
     } else {
       rightStat.classList.remove("is-primary");
-      rightStat.classList.add("is-warning");
+      rightStat.classList.add("is-danger");
     }
   });
 };
-
 //CSS and HTML for movie stat
 const movieTemplate = (movieDetail) => {
   const dollars = parseInt(
@@ -128,6 +127,7 @@ const movieTemplate = (movieDetail) => {
         </div>
       </div>
     </article>
+
     <article data-value=${awards} class="notification is-primary">
       <p class="title">${movieDetail.Awards}</p>
       <p class="subtitle">Awards</p>
