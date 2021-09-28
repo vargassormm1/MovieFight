@@ -50,7 +50,7 @@ let rightMovie;
 //This functions will make another network request and fetch data on movie clicked
 const onMovieSelect = async (movie, summaryElement, side) => {
   //Use axios.get again to make the followup request with a different parameter
-  const response = await axios.get("http://www.omdbapi.com/", {
+  const response = await axios.get("https://www.omdbapi.com/", {
     params: {
       apikey: "a1d6cd06",
       i: movie.imdbID,
